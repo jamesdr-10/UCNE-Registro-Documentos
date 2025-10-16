@@ -8,7 +8,7 @@ public class Documento
     [Key]
     public int DocumentoId { get; set; }
     public int TipoDocumentoId { get; set; }
-    public string Matricula { get; set; } = string.Empty;
+    public int EstudianteId { get; set; }
     public DateTime FechaSolicitud { get; set; }
     public DateTime? FechaEntrega { get; set; }
 
@@ -18,6 +18,6 @@ public class Documento
     [ForeignKey(nameof(TipoDocumentoId))]
     public TipoDocumento TipoDocumento { get; set; }
 
-    [ForeignKey(nameof(Matricula))]
+    [ForeignKey(nameof(EstudianteId))]
     public Estudiante Estudiante { get; set; }
 }

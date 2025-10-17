@@ -1,6 +1,7 @@
 ﻿@page "/UCNE/Registros/{RegistradorId:int}"
 
 @inject RegistradorService registradorService
+@inject DocumentoService documentoService
 
 <PageTitle>Registros Académicos</PageTitle>
 <div class="container">
@@ -32,6 +33,6 @@
     protected override async Task OnInitializedAsync()
     {
         Registrador = await registradorService.BuscarPorId(RegistradorId);
-        // ListaDocumentos = listar de documentos service
+        ListaDocumentos = await documentoService.Listar(d => true);
     }
 }

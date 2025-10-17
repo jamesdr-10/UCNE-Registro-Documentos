@@ -67,7 +67,7 @@
     public string? Usuario;
     public string? Password;
 
-    public Registrador registrador = new Registrador();
+    public Registrador Registrador = new Registrador();
 
     public async Task Conectar()
     {
@@ -75,8 +75,8 @@
         {
             if (await registradorService.ExisteCredenciales(Usuario, Password))
             {
-                registrador = await registradorService.BuscarPorCredenciales(Usuario, Password);
-                Navigation.NavigateTo($"/UCNE/Registros/{registrador?.RegistradorId}");
+                Registrador = await registradorService.BuscarPorCredenciales(Usuario, Password);
+                Navigation.NavigateTo($"/UCNE/Registros/{Registrador?.RegistradorId}");
             }
         }
     }

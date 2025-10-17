@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+@inject RegistradorService registradorService
 @inject NavigationManager Navigation
 
 <PageTitle>Iniciar Sesión</PageTitle>
@@ -68,8 +69,15 @@
 
     public Registrador registrador = new Registrador();
 
-    public async Task Conectar ()
+    public async Task Conectar()
     {
-        Navigation.NavigateTo("/UCNE/Registros");
+        if (!string.IsNullOrEmpty(Usuario) && !string.IsNullOrEmpty(Password))
+        {
+            if (await registradorService.ExisteCredenciales(Usuario, Password))
+            {
+                registrador = await registradorService.BuscarPorCredenciales(Usuario, Password);
+                Navigation.NavigateTo($"/UCNE/Registros/{registrador.RegistradorId}");
+            }
+        }
     }
 }

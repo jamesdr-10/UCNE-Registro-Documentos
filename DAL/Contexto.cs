@@ -8,4 +8,5 @@ public class Contexto : DbContext
     public Contexto(DbContextOptions<Contexto> options) : base(options) { }
 
     public DbSet<Registrador> Registradores { get; set; }
+    public DbSet<Documento> Documentos { get; set; }
 }

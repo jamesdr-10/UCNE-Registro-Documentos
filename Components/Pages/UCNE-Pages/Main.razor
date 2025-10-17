@@ -1,4 +1,4 @@
-﻿@page "/UCNE/Registros"
+﻿@page "/UCNE/Registros/{RegistradorId:int}"
 
 <PageTitle>Registros Académicos</PageTitle>
 <div class="container">
@@ -12,7 +12,7 @@
             <div class="d-flex justify-content-end">
                 <a href="" class="btn btn-primary">Crear Nueva Solicitud</a>
             </div>
-          
+
 
         </div>
 
@@ -20,5 +20,7 @@
 </div>
 
 @code {
+    [Parameter]
+    public int RegistradorId{ get; set; }
 
 }

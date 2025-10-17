@@ -52,13 +52,12 @@
                         <tr> 
                             <td> @documento.DocumentoId </td>
                             <td> @documento.TipoDocumento.Nombre </td>
-                            <td> @documento.Estudiante.Nombres + @documento.Estudiante.Apellidos </td>
+                            <td> @documento.Estudiante.Nombres + " " + @documento.Estudiante.Apellidos </td>
                             <td> @documento.FechaSolicitud </td>
                             <td> @documento.FechaEntrega </td>
                             @* Falta el <td> de registradores y el de acciones (por debatir) *@
                         </tr>
                     }
-
                 </table>
             </div>
         </div>

@@ -1,4 +1,5 @@
 ﻿@page "/UCNE/Registros/{RegistradorId:int}"
+@inject RegistradorService registradorService
 
 <PageTitle>Registros Académicos</PageTitle>
 <div class="container">
@@ -23,4 +24,10 @@
     [Parameter]
     public int RegistradorId{ get; set; }
 
+    public Registrador registrador { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        registrador = await registradorService.BuscarPorId(RegistradorId);
+    }
 }

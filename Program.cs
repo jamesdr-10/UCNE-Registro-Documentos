@@ -7,8 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-//Inyeccion del service
+//Inyeccion de los service
 builder.Services.AddScoped<RegistradorService>();
+builder.Services.AddScoped<DocumentoService>();
 
 var app = builder.Build();
 

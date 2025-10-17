@@ -19,4 +19,11 @@ public class RegistradorService(IDbContextFactory<Contexto> DbFactory)
         return await contexto.Registradores
             .FirstOrDefaultAsync(r => r.NombreUsuario.Equals(nombreUsuario.Trim()) && r.Contrasena.Equals(contrasena));
     }
+
+    public async Task<Registrador?> BuscarPorId(int id)
+    {
+        await using var contexto = await DbFactory.CreateDbContextAsync();
+        return await contexto.Registradores
+            .FirstOrDefaultAsync(r => r.RegistradorId == id);
+    }
 }

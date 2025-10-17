@@ -16,7 +16,51 @@
                 <a href="" class="btn btn-primary">Crear Nueva Solicitud</a>
             </div>
 
+            <div class="row align-items-center">
+                <div class ="col-12 col-md-6 mb-2">
+                    <label class="form-label"> <strong> Filtrar por: </strong></label>
+                    <InputSelect class="form-select" @bind-Value = "filtro" @onchange = "AccionesSelect">
+                        <option value="misDocs" selected> Mis documentos </option>
+                        <option value="todoDocs"> Todos los documentos </option>
+                    </InputSelect>
+                </div>
+            </div>
 
+            <div class = "table-responsive">
+                <table class="table-hover text-center">
+                    <thead class="table table-striped"> 
+                        <tr>
+                            <th>ID</th>
+                            <th>Tipo Documento</th>
+                            <th>Estudiante</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Fecha Entrega</th>
+                            <th>Registradores</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    @if(ListaDocumentos.Count == 0)
+                    {
+                        <tr>
+                            <td class="text-center"> No se han encontrado documentos </td>
+                        </tr>
+                    }
+
+                    @foreach (var documento in ListaDocumentos)
+                    {
+                        <tr> 
+                            <td> @documento.DocumentoId </td>
+                            <td> @documento.TipoDocumento.Nombre </td>
+                            <td> @documento.Estudiante.Nombres + @documento.Estudiante.Apellidos </td>
+                            <td> @documento.FechaSolicitud </td>
+                            <td> @documento.FechaEntrega </td>
+                            @* Falta el <td> de registradores y el de acciones (por debatir) *@
+                        </tr>
+                    }
+
+                </table>
+            </div>
         </div>
 
     </div>
@@ -30,9 +74,30 @@
 
     public List<Documento> ListaDocumentos = new List<Documento>();
 
+    public string filtro { get; set; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         Registrador = await registradorService.BuscarPorId(RegistradorId);
-        ListaDocumentos = await documentoService.Listar(d => true);
+        ListaDocumentos = await documentoService.Listar(d => d.DocumentoId > 0);
+        await AccionesSelect();
+    }
+
+    //Nombre del metodo abierto a cambios
+    public async Task AccionesSelect ()
+    {
+        var lista = ListaDocumentos;
+
+        if (filtro == "misDocs")
+        {
+            lista = lista.Where(d => d.Registradores.Any(r => r.RegistradorId == RegistradorId)).ToList();
+        }
+
+        else if (filtro == "todoDocs")
+        {
+            lista = ListaDocumentos;
+        }
+
+        ListaDocumentos = lista;
     }
 }

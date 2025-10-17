@@ -76,7 +76,7 @@
             if (await registradorService.ExisteCredenciales(Usuario, Password))
             {
                 registrador = await registradorService.BuscarPorCredenciales(Usuario, Password);
-                Navigation.NavigateTo($"/UCNE/Registros/{registrador.RegistradorId}");
+                Navigation.NavigateTo($"/UCNE/Registros/{registrador?.RegistradorId}");
             }
         }
     }

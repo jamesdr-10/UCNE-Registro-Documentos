@@ -1,10 +1,14 @@
 using UCNE_Registro_Documentos.Components;
+using UCNE_Registro_Documentos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+//Inyeccion del service
+builder.Services.AddScoped<RegistradorService>();
 
 var app = builder.Build();
 

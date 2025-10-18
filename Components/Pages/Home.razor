@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+@inject RegistradorService registradorService
 @inject NavigationManager Navigation
 
 <PageTitle>Iniciar Sesión</PageTitle>
@@ -39,7 +40,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label"><strong>Contraseña</strong></label>
-                                <InputText class="form-control" @bind-Value="Password"></InputText>
+                                <input type="password" class="form-control" @bind-value = "Password"/> 
                             </div>
 
                         </div>
@@ -49,7 +50,8 @@
                 <div class="card-footer text-center">
 
                     <div class="mt-2">
-                        <a href="/UCNE/Registros" class="btn btn-secondary">Conectar</a>
+                        <a href="/UCNE/Registros" class="btn btn-danger"> Conectar </a>
+                        <button type="submit" class="btn btn-secondary" @onclick ="Conectar"> Conectar </button>
                     </div>
 
                     <div class="mt-3">
@@ -64,4 +66,18 @@
 @code {
     public string? Usuario;
     public string? Password;
+
+    public Registrador Registrador = new Registrador();
+
+    public async Task Conectar()
+    {
+        if (!string.IsNullOrEmpty(Usuario) && !string.IsNullOrEmpty(Password))
+        {
+            if (await registradorService.ExisteCredenciales(Usuario, Password))
+            {
+                Registrador = await registradorService.BuscarPorCredenciales(Usuario, Password);
+                Navigation.NavigateTo($"/UCNE/Registros/{Registrador?.RegistradorId}");
+            }
+        }
+    }
 }
